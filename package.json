@@ -15,6 +15,6 @@
     "electron": "^14.0.0"
   },
   "dependencies": {
-    
+    "systeminformation": "^5.8.7"
   }
 }
