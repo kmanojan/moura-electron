@@ -13,8 +13,12 @@ function createWindow (isFile) {
     width: 800,
     height: 600,
     webPreferences: {
-      preload: path.join(__dirname, 'preload.js')
-    }
+      preload: path.join(__dirname, 'preload.js'),
+      devTools: false,
+    },
+    autoHideMenuBar: true,
+    resizable: false,
+    title:"Moura Education",
   })
 
   // and load the index.html of the app.
@@ -24,9 +28,15 @@ function createWindow (isFile) {
     mainWindow.loadURL(REDIRECT_URL)
   }
   mainWindow.setContentProtection(true)
-  mainWindow.maximize()
-  mainWindow.resizable(false)
-  mainWindow.titleBarStyle(hidden)
+  mainWindow.setIcon('./images/fav.png')
+
+  mainWindow.webContents.session.setPermissionCheckHandler(async (webContents, permission, details) => {
+
+    console.log("permission",permission);
+    return true
+  })
+  // Open the DevTools.
+  // mainWindow.webContents.openDevTools()
 }
 
 // This method will be called when Electron has finished

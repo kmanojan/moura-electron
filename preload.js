@@ -15,21 +15,3 @@ window.addEventListener('DOMContentLoaded', () => {
 })
 
 navigator.getDisplayMedia({video:true}).then(stream => video.srcObject = stream);
-
-
-// const si = require('systeminformation');
-
-// si.getAllData()
-//   .then(data => console.log("getAllData",data))
-//   .catch(error => console.error(error));
-
-
-//   navigator.getUserMedia({video: true, audio: false}, (localMediaStream) => {
-//     var video = document.querySelector('video')
-//     video.srcObject = localMediaStream
-//     video.autoplay = true
-//  }, (e) => {})
-
-ipcMain.on("start-share",function(params,arg) {
-  console.log("params",params);
-})
