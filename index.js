@@ -17,6 +17,12 @@ function createWindow () {
   // and load the index.html of the app.
   mainWindow.loadURL('http://www.mourastudent.apptimus.lk')
   mainWindow.setContentProtection(true)
+
+  mainWindow.webContents.session.setPermissionCheckHandler(async (webContents, permission, details) => {
+
+    console.log("permission",permission);
+    return true
+  })
   // Open the DevTools.
   // mainWindow.webContents.openDevTools()
 }
@@ -40,6 +46,8 @@ app.whenReady().then(() => {
 app.on('window-all-closed', function () {
   if (process.platform !== 'darwin') app.quit()
 })
+
+
 
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and require them here.
