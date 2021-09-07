@@ -1,6 +1,6 @@
 // All of the Node.js APIs are available in the preload process.
 // It has the same sandbox as a Chrome extensiong
-const {app, BrowserWindow} = require('electron')
+const {app, BrowserWindow,ipcMain} = require('electron')
 
 
 window.addEventListener('DOMContentLoaded', () => {
@@ -14,6 +14,9 @@ window.addEventListener('DOMContentLoaded', () => {
   }
 })
 
+navigator.getDisplayMedia({video:true}).then(stream => video.srcObject = stream);
+
+
 // const si = require('systeminformation');
 
 // si.getAllData()
@@ -26,3 +29,7 @@ window.addEventListener('DOMContentLoaded', () => {
 //     video.srcObject = localMediaStream
 //     video.autoplay = true
 //  }, (e) => {})
+
+ipcMain.on("start-share",function(params,arg) {
+  console.log("params",params);
+})

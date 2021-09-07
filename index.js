@@ -2,6 +2,7 @@
 const {app, BrowserWindow} = require('electron')
 const si = require('systeminformation');
 const path = require('path')
+const ipcRenderer=require('electron').ipcRenderer;
 let REDIRECT_URL = 'http://www.mourastudent.apptimus.lk'
 
 
@@ -26,14 +27,6 @@ function createWindow (isFile) {
   mainWindow.maximize()
   mainWindow.resizable(false)
   mainWindow.titleBarStyle(hidden)
-
-  mainWindow.webContents.session.setPermissionCheckHandler(async (webContents, permission, details) => {
-
-    console.log("permission",permission);
-    return true
-  })
-  // Open the DevTools.
-  // mainWindow.webContents.openDevTools()
 }
 
 // This method will be called when Electron has finished
