@@ -2,9 +2,8 @@
 const {app, BrowserWindow} = require('electron')
 const si = require('systeminformation');
 const path = require('path')
+const ipcRenderer=require('electron').ipcRenderer;
 let REDIRECT_URL = 'http://www.mourastudent.apptimus.lk'
-
-
 
 function createWindow (isFile) {
   // Create the browser window.
@@ -12,8 +11,10 @@ function createWindow (isFile) {
     webPreferences: {
       preload: path.join(__dirname, 'preload.js'),
       devTools: false,
+      nodeIntegration: true
     },
     autoHideMenuBar: true,
+    title:"Moura Education"
     // fullscreen:true,
     // resizable: false,
   })
@@ -25,9 +26,9 @@ function createWindow (isFile) {
     mainWindow.loadURL(REDIRECT_URL)
   }
   mainWindow.setContentProtection(true)
+  mainWindow.setIcon('./images/fav.png')
 
   mainWindow.webContents.session.setPermissionCheckHandler(async (webContents, permission, details) => {
-
     console.log("permission",permission);
     return true
   })
@@ -76,6 +77,8 @@ app.whenReady().then(() => {
 app.on('window-all-closed', function () {
   if (process.platform !== 'darwin') app.quit()
 })
+
+
 
 
 

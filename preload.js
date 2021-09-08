@@ -1,6 +1,7 @@
 // All of the Node.js APIs are available in the preload process.
 // It has the same sandbox as a Chrome extensiong
-const {app, BrowserWindow,ipcRenderer} = require('electron')
+const {app, BrowserWindow,ipcMain,ipcRenderer} = require('electron')
+const {desktopCapturer} = require('electron');
 
 
 ipcRenderer.on("captureUserImage",() => {
@@ -19,15 +20,24 @@ window.addEventListener('DOMContentLoaded', () => {
   }
 })
 
-// const si = require('systeminformation');
+navigator.getMedia = ( navigator.getUserMedia || // use the proper vendor prefix
+  navigator.webkitGetUserMedia ||
+  navigator.mozGetUserMedia ||
+  navigator.msGetUserMedia);
 
-// si.getAllData()
-//   .then(data => console.log("getAllData",data))
-//   .catch(error => console.error(error));
+navigator.getMedia({video: true}, function() {
+  // webcam is available
+}, function() {
+  // webcam is not available
+
+  let errorCallback = (error) => {
+    console.log(`There was an error connecting to the video stream: ${error.message}`);
+  };
+
+  window.navigator.webkitGetUserMedia({video: true}, (localMediaStream) => {
+    
+  }, errorCallback);
+});
 
 
-//   navigator.getUserMedia({video: true, audio: false}, (localMediaStream) => {
-//     var video = document.querySelector('video')
-//     video.srcObject = localMediaStream
-//     video.autoplay = true
-//  }, (e) => {})
+

@@ -1,1 +1,18 @@
 mac - npm run dist
+
+
+"build": {
+    "appId": "com.example.moura-education",
+    "productName": "Moura Education",
+    "nsis": {
+      "artifactName": "Moura Education.${ext}",
+      "uninstallDisplayName": "Moura Education"
+    },
+    "mac": {
+      "icon": "./images/fav.png",   
+      "category": "public.app-category.utilities"
+    },
+    "win": {
+      "icon": "./images/fav.png"
+    }
+  }

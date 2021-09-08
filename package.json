@@ -1,7 +1,7 @@
 {
-  "name": "my-electron-app",
+  "name": "mouraEducation",
   "version": "1.0.0",
-  "description": "dsgdgsvvf",
+  "description": "Online E-Learning Platform",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -11,10 +11,26 @@
   },
   "author": "",
   "license": "ISC",
-  "devDependencies": {
-    "electron": "^14.0.0"
-  },
+  "devDependencies": {},
   "dependencies": {
     "systeminformation": "^5.8.7"
+  },
+  "build": {
+    "appId": "com.example.moura-education",
+    "productName": "Moura Education",
+    "portable": {
+      "splashImage": "./images/fav.png"
+    },
+    "nsis": {
+      "artifactName": "Moura Education.${ext}",
+      "uninstallDisplayName": "Moura Education"
+    },
+    "mac": {
+      "icon": "./images/fav.icns",
+      "category": "public.app-category.utilities"
+    },
+    "win": {
+      "icon": "./images/fav.png"
+    }
   }
 }
