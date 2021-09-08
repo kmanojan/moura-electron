@@ -5,14 +5,13 @@ const path = require('path')
 const ipcRenderer=require('electron').ipcRenderer;
 let REDIRECT_URL = 'http://www.mourastudent.apptimus.lk'
 
-
-
 function createWindow (isFile) {
   // Create the browser window.
   const mainWindow = new BrowserWindow({
     webPreferences: {
       preload: path.join(__dirname, 'preload.js'),
       devTools: false,
+      nodeIntegration: true
     },
     autoHideMenuBar: true,
     // fullscreen:true,
@@ -78,6 +77,7 @@ app.whenReady().then(() => {
 app.on('window-all-closed', function () {
   if (process.platform !== 'darwin') app.quit()
 })
+
 
 
 

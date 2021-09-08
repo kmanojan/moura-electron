@@ -11,21 +11,23 @@
   },
   "author": "",
   "license": "ISC",
-  "devDependencies": {
-    
-  },
+  "devDependencies": {},
   "dependencies": {
+    "electron": "^14.0.0",
     "systeminformation": "^5.8.7"
   },
   "build": {
     "appId": "com.example.moura-education",
     "productName": "Moura Education",
+    "portable": {
+      "splashImage": "./images/fav.png"
+    },
     "nsis": {
       "artifactName": "Moura Education.${ext}",
       "uninstallDisplayName": "Moura Education"
     },
     "mac": {
-      "icon": "./images/fav.png",   
+      "icon": "./images/fav.icns",
       "category": "public.app-category.utilities"
     },
     "win": {
