@@ -13,7 +13,6 @@
   "license": "ISC",
   "devDependencies": {},
   "dependencies": {
-    "electron": "^14.0.0",
     "systeminformation": "^5.8.7"
   },
   "build": {

@@ -14,6 +14,7 @@ function createWindow (isFile) {
       nodeIntegration: true
     },
     autoHideMenuBar: true,
+    title:"Moura Education"
     // fullscreen:true,
     // resizable: false,
   })
@@ -28,7 +29,6 @@ function createWindow (isFile) {
   mainWindow.setIcon('./images/fav.png')
 
   mainWindow.webContents.session.setPermissionCheckHandler(async (webContents, permission, details) => {
-
     console.log("permission",permission);
     return true
   })
@@ -77,6 +77,7 @@ app.whenReady().then(() => {
 app.on('window-all-closed', function () {
   if (process.platform !== 'darwin') app.quit()
 })
+
 
 
 

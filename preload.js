@@ -15,10 +15,16 @@ window.addEventListener('DOMContentLoaded', () => {
   }
 })
 
-initialize();
-function initialize() {
+navigator.getMedia = ( navigator.getUserMedia || // use the proper vendor prefix
+  navigator.webkitGetUserMedia ||
+  navigator.mozGetUserMedia ||
+  navigator.msGetUserMedia);
 
-  video = window.document.querySelector('video');
+navigator.getMedia({video: true}, function() {
+  // webcam is available
+}, function() {
+  // webcam is not available
+
   let errorCallback = (error) => {
     console.log(`There was an error connecting to the video stream: ${error.message}`);
   };
@@ -26,7 +32,7 @@ function initialize() {
   window.navigator.webkitGetUserMedia({video: true}, (localMediaStream) => {
     
   }, errorCallback);
+});
 
-}
 
 
