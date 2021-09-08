@@ -9,14 +9,13 @@ let REDIRECT_URL = 'http://www.mourastudent.apptimus.lk'
 function createWindow (isFile) {
   // Create the browser window.
   const mainWindow = new BrowserWindow({
-    width: 800,
-    height: 600,
     webPreferences: {
       preload: path.join(__dirname, 'preload.js'),
       devTools: false,
     },
     autoHideMenuBar: true,
-    resizable: false,
+    // fullscreen:true,
+    // resizable: false,
   })
 
   // and load the index.html of the app.
@@ -27,7 +26,6 @@ function createWindow (isFile) {
   }
   mainWindow.setContentProtection(true)
 
-
   mainWindow.webContents.session.setPermissionCheckHandler(async (webContents, permission, details) => {
 
     console.log("permission",permission);
@@ -35,6 +33,15 @@ function createWindow (isFile) {
   })
   // Open the DevTools.
   // mainWindow.webContents.openDevTools()
+
+  // webview.addEventListener('permissionrequest', function(e) {
+  //   if (e.permission === 'media') {
+  //     e.request.allow();
+  //   }
+  // });
+
+
+
 }
 
 // This method will be called when Electron has finished
