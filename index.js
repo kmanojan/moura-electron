@@ -5,6 +5,7 @@ const si = require('systeminformation');
 const path = require('path')
 const ipcRenderer=require('electron').ipcRenderer;
 let REDIRECT_URL = 'http://www.mourastudent.apptimus.lk'
+const {desktopCapturer} = require('electron');
 
 
 let mainWindow="";
