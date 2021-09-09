@@ -1,13 +1,19 @@
 // Modules to control application life and create native browser window
-const {app, BrowserWindow} = require('electron')
+const {app, BrowserWindow,screen , dialog} = require('electron')
+const electron = require('electron')
 const si = require('systeminformation');
 const path = require('path')
 const ipcRenderer=require('electron').ipcRenderer;
 let REDIRECT_URL = 'http://www.mourastudent.apptimus.lk'
 
-function createWindow (isFile) {
+
+let mainWindow="";
+
+
+
+function createWindow () {
   // Create the browser window.
-  const mainWindow = new BrowserWindow({
+ mainWindow = new BrowserWindow({
     webPreferences: {
       preload: path.join(__dirname, 'preload.js'),
       // devTools: false,
@@ -15,16 +21,10 @@ function createWindow (isFile) {
     },
     autoHideMenuBar: true,
     title:"Moura Education"
-    // fullscreen:true,
-    // resizable: false,
   })
   mainWindow.removeMenu()
   // and load the index.html of the app.
-  if (isFile) {
-    mainWindow.loadFile(REDIRECT_URL)
-  }else{
-    mainWindow.loadURL(REDIRECT_URL)
-  }
+  mainWindow.loadURL(REDIRECT_URL)
   mainWindow.setContentProtection(true)
   mainWindow.setIcon('./images/fav.png')
 
@@ -46,28 +46,94 @@ function createWindow (isFile) {
   //   }
   // });
 
-
-
 }
+
+app.on('ready',function(events,contents) {
+
+  const window = BrowserWindow.getFocusedWindow();
+  let displayCount = electron.screen.getAllDisplays();
+
+  setTimeout(() => {
+    displayCount = electron.screen.getAllDisplays();
+    si.getAllData()
+    .then(data => {
+        console.log("system",data.system.virtual);
+        if (data.system.virtual) {
+          mainWindow.hide();
+          dialog.showMessageBox(window, {
+            title: "Seems like you have been using Virtualy",
+            buttons: ['Dismiss'],
+            type: 'warning',
+            message: "Seems like you have been using Virtualy",
+            icon: path.join(__dirname, 'images/fav.png')
+
+            });
+        }else if (displayCount.length  == 1) {
+          mainWindow.show();
+        }else{
+          mainWindow.hide();
+          dialog.showMessageBox(window, {
+            title: "We don't allow external moniters",
+            buttons: ['Dismiss'],
+            type: 'warning',
+            message: "We don't allow external moniters",
+            icon: path.join(__dirname, 'images/fav.png')
+
+            });
+
+        } 
+      });
+    
+  }, 3000);
+
+     
+
+
+  electron.screen.on('display-added',()=>{
+    displayCount = electron.screen.getAllDisplays();
+    if (displayCount.length  == 1) {
+      mainWindow.show();
+    }else{
+      mainWindow.hide();
+      dialog.showMessageBox(window, {
+        title: "We don't allow external moniters",
+        buttons: ['Dismiss'],
+        type: 'warning',
+        message: "We don't allow external moniters",
+        icon: path.join(__dirname, 'images/fav.png')
+
+       });
+
+    }    
+  })
+
+  electron.screen.on('display-removed',()=>{
+    displayCount = electron.screen.getAllDisplays();
+    if (displayCount.length  == 1) {
+      mainWindow.show();
+    }else{
+      mainWindow.hide();
+
+      dialog.showMessageBox(window, {
+        title: "We don't allow external moniters",
+        buttons: ['Dismiss'],
+        type: 'warning',
+        message: "We don't allow external moniters",
+        icon: path.join(__dirname, 'images/fav.png')
+
+       });
+    }
+  })
+})
+
+
+
 
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
 app.whenReady().then(() => {
-  si.getAllData()
-  .then(data => {
-      console.log("system",data.system.virtual);
-      if (data.system.virtual) {
-        REDIRECT_URL = "virtual-box.html"
-        createWindow(true)
-      }else if(data.graphics.displays.length > 1){
-        REDIRECT_URL = "virtual-box.html"
-        createWindow(true)
-      }else{
-        createWindow(false)
-      }
-    })
-  .catch(error => console.error(error));
+  createWindow();
 
   app.on('activate', function () {
     // On macOS it's common to re-create a window in the app when the
@@ -82,6 +148,8 @@ app.whenReady().then(() => {
 app.on('window-all-closed', function () {
   if (process.platform !== 'darwin') app.quit()
 })
+
+
 
 
 
