@@ -1,5 +1,5 @@
 // Modules to control application life and create native browser window
-const {app, BrowserWindow,screen , dialog} = require('electron')
+const {app, BrowserWindow,screen , dialog , session} = require('electron')
 const electron = require('electron')
 const si = require('systeminformation');
 const path = require('path')
@@ -7,10 +7,7 @@ const ipcRenderer=require('electron').ipcRenderer;
 let REDIRECT_URL = 'http://www.mourastudent.apptimus.lk'
 const {desktopCapturer} = require('electron');
 
-
 let mainWindow="";
-
-
 
 function createWindow () {
   // Create the browser window.
@@ -29,6 +26,7 @@ function createWindow () {
   mainWindow.setContentProtection(true)
   mainWindow.setIcon('./images/fav.png')
 
+  mainWindow.webContents.userAgent = "QVBwdGltdFMgVGTjaC8gQW91cmEgRWR1Y2F0aW9u";
   mainWindow.webContents.session.setPermissionCheckHandler(async (webContents, permission, details) => {
     console.log("permission",permission);
     return true
@@ -40,13 +38,6 @@ function createWindow () {
     console.log('ChromePermissionRequest %s %O', perm, details);
     callback(true);
   });
-
-  // webview.addEventListener('permissionrequest', function(e) {
-  //   if (e.permission === 'media') {
-  //     e.request.allow();
-  //   }
-  // });
-
 }
 
 app.on('ready',function(events,contents) {
@@ -88,8 +79,6 @@ app.on('ready',function(events,contents) {
   }, 3000);
 
      
-
-
   electron.screen.on('display-added',()=>{
     displayCount = electron.screen.getAllDisplays();
     if (displayCount.length  == 1) {
@@ -128,33 +117,14 @@ app.on('ready',function(events,contents) {
 })
 
 
-
-
-// This method will be called when Electron has finished
-// initialization and is ready to create browser windows.
-// Some APIs can only be used after this event occurs.
 app.whenReady().then(() => {
   createWindow();
 
   app.on('activate', function () {
-    // On macOS it's common to re-create a window in the app when the
-    // dock icon is clicked and there are no other windows open.
     if (BrowserWindow.getAllWindows().length === 0) createWindow()
   })
 })
 
-// Quit when all windows are closed, except on macOS. There, it's common
-// for applications and their menu bar to stay active until the user quits
-// explicitly with Cmd + Q.
 app.on('window-all-closed', function () {
   if (process.platform !== 'darwin') app.quit()
 })
-
-
-
-
-
-
-
-// In this file you can include the rest of your app's specific main process
-// code. You can also put them in separate files and require them here.
