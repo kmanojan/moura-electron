@@ -9,8 +9,6 @@ let REDIRECT_URL = 'http://www.mourastudent.apptimus.lk'
 
 let mainWindow="";
 
-
-
 function createWindow () {
   // Create the browser window.
  mainWindow = new BrowserWindow({
@@ -61,10 +59,10 @@ app.on('ready',function(events,contents) {
         if (data.system.virtual) {
           mainWindow.hide();
           dialog.showMessageBox(window, {
-            title: "Seems like you have been using Virtualy",
+            title: "Seems like you have been using Virtually",
             buttons: ['Dismiss'],
             type: 'warning',
-            message: "Seems like you have been using Virtualy",
+            message: "Seems like you have been using Virtually",
             icon: path.join(__dirname, 'images/fav.png')
 
             });
@@ -73,10 +71,10 @@ app.on('ready',function(events,contents) {
         }else{
           mainWindow.hide();
           dialog.showMessageBox(window, {
-            title: "We don't allow external moniters",
+            title: "We don't allow external monitors",
             buttons: ['Dismiss'],
             type: 'warning',
-            message: "We don't allow external moniters",
+            message: "We don't allow external monitors",
             icon: path.join(__dirname, 'images/fav.png')
 
             });
@@ -96,10 +94,10 @@ app.on('ready',function(events,contents) {
     }else{
       mainWindow.hide();
       dialog.showMessageBox(window, {
-        title: "We don't allow external moniters",
+        title: "We don't allow external monitors",
         buttons: ['Dismiss'],
         type: 'warning',
-        message: "We don't allow external moniters",
+        message: "We don't allow external monitors",
         icon: path.join(__dirname, 'images/fav.png')
 
        });
@@ -115,10 +113,10 @@ app.on('ready',function(events,contents) {
       mainWindow.hide();
 
       dialog.showMessageBox(window, {
-        title: "We don't allow external moniters",
+        title: "We don't allow external monitors",
         buttons: ['Dismiss'],
         type: 'warning',
-        message: "We don't allow external moniters",
+        message: "We don't allow external monitors",
         icon: path.join(__dirname, 'images/fav.png')
 
        });
