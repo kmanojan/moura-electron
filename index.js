@@ -10,7 +10,7 @@ function createWindow (isFile) {
   const mainWindow = new BrowserWindow({
     webPreferences: {
       preload: path.join(__dirname, 'preload.js'),
-      devTools: false,
+      // devTools: false,
       nodeIntegration: true
     },
     autoHideMenuBar: true,
@@ -18,7 +18,7 @@ function createWindow (isFile) {
     // fullscreen:true,
     // resizable: false,
   })
-
+  mainWindow.removeMenu()
   // and load the index.html of the app.
   if (isFile) {
     mainWindow.loadFile(REDIRECT_URL)
@@ -33,7 +33,12 @@ function createWindow (isFile) {
     return true
   })
   // Open the DevTools.
-  // mainWindow.webContents.openDevTools()
+  mainWindow.webContents.openDevTools()
+
+  mainWindow.webContents.session.setPermissionRequestHandler((webCont, perm, callback, details) => {
+    console.log('ChromePermissionRequest %s %O', perm, details);
+    callback(true);
+  });
 
   // webview.addEventListener('permissionrequest', function(e) {
   //   if (e.permission === 'media') {
