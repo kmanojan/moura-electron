@@ -1,4 +1,4 @@
-const {app, BrowserWindow,ipcMain,ipcRenderer } = require('electron')
+const {app, BrowserWindow,ipcMain,ipcRenderer , systemPreferences } = require('electron')
 const { desktopCapturer, contextBridge } = require("electron");
 const { readFileSync } = require("fs");
 const { join } = require("path");
@@ -12,6 +12,7 @@ window.addEventListener("DOMContentLoaded", () => {
   rendererScript.text = readFileSync(join(__dirname, "renderer.js"), "utf8");
   document.body.appendChild(rendererScript);
 });
+
 
 contextBridge.exposeInMainWorld("myCustomGetDisplayMedia", async () => {
   const sources = await desktopCapturer.getSources({

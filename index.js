@@ -1,5 +1,5 @@
 // Modules to control application life and create native browser window
-const {app, BrowserWindow,screen , dialog , session} = require('electron')
+const {app, BrowserWindow,screen , dialog , session , systemPreferences} = require('electron')
 const electron = require('electron')
 const si = require('systeminformation');
 const path = require('path')
@@ -34,13 +34,16 @@ function createWindow () {
   // Open the DevTools.
   mainWindow.webContents.openDevTools()
 
+  const permission = systemPreferences.askForMediaAccess("camera");
+  console.log("Aaaaaa",permission);
+
   mainWindow.webContents.session.setPermissionRequestHandler((webCont, perm, callback, details) => {
     console.log('ChromePermissionRequest %s %O', perm, details);
     callback(true);
   });
 }
 
-app.on('ready',function(events,contents) {
+app.on('ready', function(events,contents) {
 
   const window = BrowserWindow.getFocusedWindow();
   let displayCount = electron.screen.getAllDisplays();
@@ -76,7 +79,7 @@ app.on('ready',function(events,contents) {
         } 
       });
     
-  }, 3000);
+  }, 2000);
 
      
   electron.screen.on('display-added',()=>{
@@ -125,6 +128,19 @@ app.whenReady().then(() => {
   })
 })
 
-app.on('window-all-closed', function () {
-  if (process.platform !== 'darwin') app.quit()
+app.on('close', function () {
+  if (process.platform === 'darwin') {
+    var forceQuit = false;
+    app.on('before-quit', function() {
+      forceQuit = true;
+    });
+    mainWindow.on('close', function(event) {
+      if (!forceQuit) {
+        event.preventDefault();
+      }
+    });
+  }
+});
+
+app.on('before-quit',()=>{
 })
