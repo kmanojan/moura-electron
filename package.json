@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "electron .",
-    "dist": "CXXFLAGS=\"-mmacosx-version-min=10.13\" LDFLAGS=\"-mmacosx-version-min=10.13\" electron-builder",
+    "dist": "electron-builder",
     "pack": "electron-builder --dir"
   },
   "author": "",
@@ -28,7 +28,7 @@
     "mac": {
       "icon": "./images/fav.icns",
       "category": "public.app-category.utilities",
-      "target":"dmg",
+      "target": "dmg",
       "entitlements": "entitlements.mac.plist",
       "extendInfo": {
         "LSMinimumSystemVersion": "8.00.6",
