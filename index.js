@@ -4,6 +4,8 @@ const electron = require('electron')
 const si = require('systeminformation');
 const path = require('path')
 const ipcRenderer=require('electron').ipcRenderer;
+const url = require('url')
+
 let REDIRECT_URL = 'http://www.mourastudent.apptimus.lk'
 const {desktopCapturer} = require('electron');
 
@@ -143,4 +145,57 @@ app.on('close', function () {
 });
 
 app.on('before-quit',()=>{
+})
+
+
+
+
+
+
+
+//********************************Deep Link */
+
+let deeplinkingUrl
+
+// Force Single Instance Application
+const gotTheLock = app.requestSingleInstanceLock()
+if (gotTheLock) {
+  app.on('second-instance', (e, argv) => {
+
+    // Protocol handler for win32
+    // argv: An array of the second instance’s (command line / deep linked) arguments
+    if (process.platform == 'win32') {
+      // Keep only command line / deep linked arguments
+      deeplinkingUrl = argv.slice(1)
+    }
+    logEverywhere('app.makeSingleInstance# ' + deeplinkingUrl)
+
+    if (mainWindow) {
+      if (mainWindow.isMinimized()) mainWindow.restore()
+      mainWindow.focus()
+    }
+  })
+} else {
+  app.quit()
+  return
+}
+
+// Protocol handler for win32
+if (process.platform == 'win32') {
+  // Keep only command line / deep linked arguments
+  deeplinkingUrl = process.argv.slice(1)
+}
+
+if (!app.isDefaultProtocolClient('moura')) {
+  // Define custom protocol handler. Deep linking works on packaged versions of the application!
+  app.setAsDefaultProtocolClient('moura')
+}
+
+app.on('will-finish-launching', function() {
+  // Protocol handler for osx
+  app.on('open-url', function(event, url) {
+    event.preventDefault()
+    deeplinkingUrl = url
+    logEverywhere('open-url# ' + deeplinkingUrl)
+  })
 })

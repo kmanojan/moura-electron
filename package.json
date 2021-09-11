@@ -1,5 +1,5 @@
 {
-  "name": "mouraEducation",
+  "name": "QVBwdGltdFMgVGTjaC8gQW91cmEgRWR1Y2F0aW9u",
   "version": "1.0.0",
   "description": "Online E-Learning Platform",
   "main": "index.js",
@@ -21,9 +21,20 @@
     "portable": {
       "splashImage": "./images/fav.png"
     },
+    "protocols": {
+      "name": "electron-deep-linking",
+      "schemes": [
+        "moura"
+      ]
+    },
+    "target":"NSIS",
     "nsis": {
       "artifactName": "Moura Education.${ext}",
-      "uninstallDisplayName": "Moura Education"
+      "uninstallDisplayName": "Moura Education",
+      "oneClick":false,
+      "installerIcon":"./images/fav.ico",
+      "uninstallerIcon":"./images/fav.ico",
+      "menuCategory":"Education"
     },
     "mac": {
       "icon": "./images/fav.icns",

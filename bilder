@@ -16,3 +16,21 @@ mac - npm run dist
       "icon": "./images/fav.png"
     }
   }
+
+
+
+
+
+
+
+
+
+  "nsis": {
+      "artifactName": "Moura Education.${ext}",
+      "uninstallDisplayName": "Moura Education",
+      "oneClick":false,
+      "allowToChangeInstallationDirectory":true,
+      "installerIcon":"./images/fav.ico",
+      "uninstallerIcon":"./images/fav.ico",
+      "menuCategory":"Education"
+    },
