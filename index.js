@@ -168,7 +168,6 @@ if (gotTheLock) {
       // Keep only command line / deep linked arguments
       deeplinkingUrl = argv.slice(1)
     }
-    logEverywhere('app.makeSingleInstance# ' + deeplinkingUrl)
 
     if (mainWindow) {
       if (mainWindow.isMinimized()) mainWindow.restore()
@@ -196,6 +195,5 @@ app.on('will-finish-launching', function() {
   app.on('open-url', function(event, url) {
     event.preventDefault()
     deeplinkingUrl = url
-    logEverywhere('open-url# ' + deeplinkingUrl)
   })
 })
